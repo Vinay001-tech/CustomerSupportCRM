@@ -1,0 +1,79 @@
+<template>
+    <lightning-card title="Customer Search" icon-name="standard:account">
+        <div class ="slds-p-around_medium">
+            <lightning-input
+                label="Search Customer"
+                type = "search"
+                placeholder="Enter Customer name ..."
+                value={searchkey}
+            onchange={handleSearchChange}>
+            </lightning-input>
+
+            <lightning-button 
+                label = "Search"
+                variant = "brand"
+                onclick={handleSearch}
+                class="slds-m-top_medium">
+            </lightning-button>
+
+            <template lwc:if={isLoading}>
+                
+                <lightning-spinner
+                alternative-text="Searching Customers . . ."
+                size = "medium"
+                variant ="brand">
+            </lightning-spinner>
+
+            </template>
+
+            <template lwc:if ={errorMessage}>
+                <div class = "slds-text-color_error
+                slds-m-top_medium" role = "alert">
+            {errorMessage}
+        </div>
+            </template>
+
+            <template lwc:if={customers}>
+                <template for:each={customers} for:item="customer">
+                    <div key={customer.Id}
+                    class="customer-card">
+
+                    <p class = "customer-name">
+                        Customer : {customer.Name}
+                    </p>
+
+                    <p>
+                <strong>Phone:</strong>{customer.Phone}
+                    </p>
+
+                    <p>
+                <strong>Website:</strong>{customer.Website}
+                    </p>
+
+                    <p class="section-heading">
+                     Contacts
+                    </p>
+
+                    <template
+                    for:each = {customer.Contacts}
+                    for:item ="contact">
+
+                    <div 
+                    key={contact.Id}
+                    
+                    class ="contact-details">
+
+                        <p>Name:contact.Name</p>
+                        <p>Email:{contact.Email}</p>
+                        <p>Phone:{contact.Phone}</p>
+                    </div>
+
+                    </template>
+
+                </div>
+                </template>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>
