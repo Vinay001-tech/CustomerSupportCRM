@@ -1,7 +1,7 @@
 
 public with sharing class CustomerSearchController {
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static List<Account> searchCustomers(String searchKey) {
 
         if (String.isBlank(searchKey)) {

@@ -1,0 +1,81 @@
+
+<template>
+    <lightning-card title="Customer Overview" icon-name="standard:account">
+
+        <div class="slds-p-around_medium">
+
+            <template if:true={isLoading}>
+                <lightning-spinner
+                    alternative-text="Loading">
+                </lightning-spinner>
+            </template>
+
+            <template if:true={customer}>
+
+                <h2 class="slds-text-heading_medium">
+                    {customer.Name}
+                </h2>
+
+                <p class="slds-m-top_medium">
+                    <b>Phone: </b>{customer.Phone}
+                </p>
+
+                <p class="slds-m-top_medium">
+                    <b>Website: </b>{customer.Website}
+                </p>
+
+                <p class="slds-m-top_medium">
+                    <b>Account Owner: </b>{customer.OwnerName}
+                </p>
+
+                <lightning-button 
+                label="Edit Cutomer"
+                variant="brand"
+                icon-name="utility:edit"
+                onclick={handleEdit}>
+                </lightning-button>
+
+                <template if:true={isEditMode}>
+                     <lightning-card title="Edit Customer">
+                        <lightning-record-edit-form
+                        object-api-name="Account"
+                        record-id={recordId}
+                        onsuccess={handleSuccess}>
+
+                    <lightning-messages></lightning-messages>
+
+                    <lightning-input-field field-name="Name"></lightning-input-field>
+                    <lightning-input-field field-name="Phone"></lightning-input-field>
+                    <lightning-input-field field-name="Website"></lightning-input-field>
+
+                    <lightning-button
+                        type="submit"
+                        label="Save"
+                        variant="brand">
+                    </lightning-button>
+
+                    <lightning-button
+                        label="Cancel"
+                        onclick={handleCancel}
+                        class="slds-m-left_small">
+                    </lightning-button>
+
+                        </lightning-record-edit-form>
+                     </lightning-card>
+                </template>
+
+
+
+            </template>
+
+
+            <template if:true={errormessage}>
+                <p class="slds-text-color_error">
+                    {errormessage}
+                </p>
+            </template>
+
+        </div>
+
+    </lightning-card>
+</template>
